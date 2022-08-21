@@ -6,6 +6,7 @@ const registerRoutes = require('./routes/registerRoutes')
 const loginRoutes=require('./routes/loginRoutes')
 const createProductRoutes=require('./routes/createProductRoutes')
 const homepageRoutes=require("./routes/homepageRoutes")
+const productDetailsRoutes=require('./routes/productDetailsRoutes')
 const { create } = require('./models/users')
 
 app.use(express.json())
@@ -14,6 +15,7 @@ app.use('/register', registerRoutes)
 app.use('/login',loginRoutes)
 app.use('/createProduct',createProductRoutes)
 app.use('/homepage',homepageRoutes)
+app.use('/productDetails',productDetailsRoutes)
 mongoose
   .connect(
     'mongodb+srv://piyushcodes6:piyush1234@cluster0.vi2oi.mongodb.net/NodeJs_Project?retryWrites=true&w=majority'
