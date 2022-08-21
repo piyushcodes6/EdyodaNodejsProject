@@ -1,7 +1,7 @@
 const mongoose=require("mongoose")
 const productSchema=require("../models/product")
 
-const homepage=((req,res,next)=>{
+const homepage=((req,res)=>{
     productSchema.find({},(err,prod)=>{
         if(err){
            res.status(400).json(err)
