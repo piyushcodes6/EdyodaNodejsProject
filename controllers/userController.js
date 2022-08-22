@@ -55,4 +55,34 @@ const registerUsers = (req, res, next) => {
   }
 }
 
-module.exports = { registerUsers }
+const updateUser = (req, res) => {
+  const userId = req.body.userID
+  const updateBody = {
+    userID: req.body.userID,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    contactNumber: req.body.contactNumber,
+    userType: req.body.userType
+  }
+  userSchema.findOneAndUpdate({_id:userId},updateBody,(err)=>{
+    if(err){
+      res.status(400).json({ message: err })
+    }else{
+      userSchema.findOne({_id:userId},(err,user)=>{
+        console.log(user)
+        const data = {
+          userID: user._id,
+          email: user.email,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          contactNumber: user.contactNumber,
+          userType: user.userType
+        }
+        res.status(200).send({ data })
+      })
+    }
+  })
+}
+
+module.exports = { registerUsers,updateUser }
