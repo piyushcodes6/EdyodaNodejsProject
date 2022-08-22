@@ -51,7 +51,7 @@ const updateProduct = (req, res) => {
         res.status(400).json({ message: err })
       } else {
         productSchema.findOne({_id:productId},(err,prod)=>{
-          console.log(prod)
+         // console.log(prod)
           const data = {
             productId: prod._id,
             title: prod.title,
