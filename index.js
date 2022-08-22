@@ -9,6 +9,8 @@ const createProductRoutes=require('./routes/productRoutes')
 const homepageRoutes=require("./routes/homepageRoutes")
 const productDetailsRoutes=require('./routes/productDetailsRoutes')
 const updateProductRoutes = require('./routes/productRoutes')
+const viewUserRoutes=require('./routes/userRoutes')
+const wishListRoutes=require('./routes/wishlistRoutes')
 
 const { create } = require('./models/users')
 
@@ -21,6 +23,8 @@ app.use('/homepage',homepageRoutes)
 app.use('/productDetails',productDetailsRoutes)
 app.use('/updateProduct',updateProductRoutes)
 app.use('/updateUser',updateUserRoutes)
+app.use('/viewUser',viewUserRoutes)
+app.use('/wishlist',wishListRoutes)
 mongoose
   .connect(
     'mongodb+srv://piyushcodes6:piyush1234@cluster0.vi2oi.mongodb.net/NodeJs_Project?retryWrites=true&w=majority'
