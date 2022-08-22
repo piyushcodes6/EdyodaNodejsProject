@@ -1,10 +1,12 @@
 const mongoose = require('mongoose')
 const userSchema = require('../models/users')
+const productSchema=require('../models/product')
+const { update } = require('../models/users')
 const registerUsers = (req, res, next) => {
   const user = new userSchema(req.body)
   if (user.userType === 'seller') {
     let domain = user.email.split('@')[1]
-    let atpos = user.email.indexOf('@')
+    let atpos = user.email.iOf('@')
     if (user.email == null || user.email == '') {
       res.status(400).json('Please provide email')
     } // First test checks for atleast one character before @
@@ -105,3 +107,7 @@ const viewUser=((req,res)=>{
 })
 
 module.exports = { registerUsers,updateUser,viewUser}
+
+
+
+

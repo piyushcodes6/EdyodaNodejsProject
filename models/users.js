@@ -21,7 +21,10 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   contactNumber: { type: 'string', required: true },
-  userType: { type: 'string', required: true }
+  userType: { type: 'string', required: true },
+  wishlist:{
+    type:'array'
+  }
 })
 
 module.exports = mongoose.model('user', userSchema)
