@@ -85,4 +85,23 @@ const updateUser = (req, res) => {
   })
 }
 
-module.exports = { registerUsers,updateUser }
+const viewUser=((req,res)=>{
+  const userName=req.query.username;
+  userSchema.findOne({username:userName},(err,user)=>{
+    if(err){
+      res.status(400).json({ message: err })
+    }else{
+      const data = {
+        userID: user._id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        contactNumber: user.contactNumber,
+        userType: user.userType
+      }
+      res.status(200).send(data)
+    }
+  })
+})
+
+module.exports = { registerUsers,updateUser,viewUser}
