@@ -1,62 +1,65 @@
 const mongoose = require('mongoose')
 const wishlistSchema=require('../models/wishlist')
-const productSchema=require('../models/product')
+const productSchema=require('../models/product');
+const { map } = require('../routes/wishlistRoutes');
 
-const wishlist=((req,res)=>{
+const wishList=((req,res)=>{
     const productId=req.body.productId;
+    const existingProductId=new Map([
+    ])
     wishlistSchema.find({},(err,wish)=>{
-        console.log("hi")
         if(err){
-            res.status(400).json({ message: err })
-          }else{
-            //console.log(wish[0]._id.toString().replace(/ObjectId\("(.*)"\)/, "$1"))
-            for (let i = 0; i <wish.length; i++) {
-                console.log("inside for")
-                console.log(wish[i]._id.toString().replace(/ObjectId\("(.*)"\)/, "$1"))
-                console.log(wish)
-                if(wish[i]._id.toString().replace(/ObjectId\("(.*)"\)/, "$1")===productId){
-                    console.log("inside if")
-                    wishlistSchema.deleteOne({_id:wish[i]._id.toString().replace(/ObjectId\("(.*)"\)/, "$1")},(err,result)=>{
-                        if(err){
-                            res.status(400).json(err)
-                        }else{
-                            res.status(200).json(wish)
-                        }
-                    })
-                }else{
-                    console.log("Inside else")
-                    productSchema.find({_id:productId},(err,prod)=>{
-                        if(err){
-                            res.status(400).json({ message: err })
-                          }else{
-                            const data={
-                                "_id":prod[0]._id,
-                                "title":prod[0].title,
-                                "thumbnailURL": prod[0].thumbnailURL,
-                                "sellerUsername": prod[0].sellerUsername,
-                                "unitsAvailable": prod[0].unitsAvailable,
-                                "productType": prod[0].productType,
-                                "rentalStartingFromPrice": prod[0].rentalPricePerWeek
-                         }
-                        wishlistSchema.create(data,(err,wish)=>{
-                            if(err){
-                                res.status(400).json({ message: err })
-                              } 
-                        })
-                          }
-                    })
-                }
-            }
-        }
-    })
-    wishlistSchema.find({},(error,wishlist)=>{
-        if(error){
-            res.status(400).json(error)
+            console.log(err)
         }else{
-            res.status(200).json(wishlist)
+            for (let index = 0; index < wish.length; index++) {
+                existingProductId.set(wish[index]._id.toString().replace(/ObjectId\("(.*)"\)/, "$1"),index) 
+            }
+            if(existingProductId.has(productId)){
+                wishlistSchema.deleteOne({_id:productId},(err,wish)=>{
+                    if(err){
+                        console.log(err)
+                    }else{
+                        console.log(wish)
+                        wishlistSchema.find({},(error,wishList)=>{
+                            if(error){
+                                res.status(404).json(error)
+                            }else{
+                                res.status(200).json(wishList)
+                            }
+                        })
+                    }
+                });
+            }
+            else{
+                productSchema.findOne({_id:productId},(err,prod)=>{
+                        const data={
+                            "_id":prod._id,
+                            "title":prod.title,
+                            "thumbnailURL": prod.thumbnailURL,
+                            "sellerUsername": prod.sellerUsername,
+                            "unitsAvailable": prod.unitsAvailable,
+                            "productType": prod.productType,
+                            "rentalStartingFromPrice": prod.rentalPricePerWeek
+                     }
+                     wishlistSchema.create(data,(err,newDoc)=>{
+                       if(err){
+                        console.log(err)
+                       }else{
+                        console.log(newDoc)
+                        wishlistSchema.find({},(error,wishList)=>{
+                            if(error){
+                                res.status(404).json(error)
+                            }else{
+                                res.status(200).json(wishList)
+                            }
+                        })
+                       }
+                     })
+                     
+                })
+            }    
         }
     })
-
 })
 
-module.exports={wishlist}
+module.exports={wishList}
