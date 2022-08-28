@@ -1,0 +1,43 @@
+const mongoose=require('mongoose')
+const cartSchema=new mongoose.Schema({
+    userId:{
+        type:'string',
+        required:true
+    },
+    productId:{
+        type:'string',
+        required:true
+    },
+    count:{
+        type:'number',
+        required:true
+    },
+    bookingStartDate:{
+        type:'date',
+       required:true
+    },
+    bookingEndDate:{
+        type:'date',
+        required:true
+    },
+    title:{
+        type:'string',
+    },
+    thumbnailURL:{
+        type:'string',
+    },
+    sellerUsername:{
+        type:'string',
+    },
+    unitsAvailable:{
+        type:'number',
+    },
+    productType:{
+        type:'string',
+    },
+    rentedAtPrice:{
+        type:'number',
+    }
+})
+
+module.exports=mongoose.model('cart',cartSchema)
