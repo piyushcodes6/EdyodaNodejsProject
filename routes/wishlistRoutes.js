@@ -1,5 +1,5 @@
 const express = require('express')
-const {wishlist} = require('../controllers/wishlistController')
+const {wishList} = require('../controllers/wishlistController')
 const app = express()
-app.put('/',wishlist)
+app.put('/',wishList)
 module.exports = app
