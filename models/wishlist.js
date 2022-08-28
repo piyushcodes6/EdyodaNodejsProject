@@ -13,7 +13,7 @@ const wishlistSchema=new mongoose.Schema({
         required:true
     },
     unitsAvailable:{
-        type:'string',
+        type:'number',
         required:true
     },
     productType:{
@@ -21,7 +21,7 @@ const wishlistSchema=new mongoose.Schema({
         required:true
     },
     rentalStartingFromPrice:{
-        type:'string',
+        type:'number',
         required:true
     }
 })

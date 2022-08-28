@@ -13,7 +13,7 @@ const productSchema=new mongoose.Schema({
     required: true
     },
     unitsAvailable:{
-        type: 'string',
+        type: 'number',
     required: true
     },
     productType:{
@@ -25,11 +25,11 @@ const productSchema=new mongoose.Schema({
         required:true
     },
     rentalPricePerWeek:{
-        type: 'string',
+        type: 'number',
         required: true
     },
     rentalPricePerMonth:{
-        type: 'string',
+        type: 'number',
     required: true
     }
 })
